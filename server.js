@@ -6,49 +6,49 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const FILE = "gifts.json";
-
-// 🔥 lê os dados
-function readData() {
-  if (!fs.existsSync(FILE)) return [];
-  return JSON.parse(fs.readFileSync(FILE));
+function getFile(name) {
+  return `${name}.json`;
 }
 
-// 💾 salva os dados
-function saveData(data) {
-  fs.writeFileSync(FILE, JSON.stringify(data, null, 2));
+function readData(file) {
+  if (!fs.existsSync(file)) return [];
+  return JSON.parse(fs.readFileSync(file));
 }
 
-// 📥 pegar todos os presentes
-app.get("/gifts", (req, res) => {
-  res.json(readData());
+function saveData(file, data) {
+  fs.writeFileSync(file, JSON.stringify(data, null, 2));
+}
+
+app.get("/:type", (req, res) => {
+  res.json(readData(getFile(req.params.type)));
 });
 
-// ➕ adicionar seleção (incrementa contador)
-app.post("/gifts/:index", (req, res) => {
-  const data = readData();
-  const index = req.params.index;
+app.post("/:type/:index", (req, res) => {
+  const type = req.params.type;
+  const file = getFile(type);
+  const data = readData(file);
+
+  const index = Number(req.params.index);
   const action = req.body.action;
 
   if (!data[index]) {
     return res.status(404).json({ error: "Item não encontrado" });
   }
 
-  if (action === "increase") {
-    data[index].count = 1; // trava em 1 (tipo reservado)
+  if (type === "gifts") {
+    if (action === "increase") data[index].count = 1;
+    if (action === "decrease") data[index].count = 0;
   }
 
-  if (action === "decrease") {
-    data[index].count = 0;
+  if (type === "peoples") {
+    if (action === "select") data[index].bool = true;
+    if (action === "unselect") data[index].bool = false;
   }
 
-  saveData(data);
+  saveData(file, data);
   res.json(data);
 });
 
-// 🚀 iniciar servidor
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log("Servidor rodando na porta " + PORT);
+app.listen(3000, () => {
+  console.log("🔥 Servidor rodando na porta 3000");
 });
