@@ -8,7 +8,8 @@
     "bool": false
   },
   {
-    "name": "Rafaela Corecha"
+    "name": "Rafaela Corecha",
+    "bool": false
   },
   {
     "name": "Regis Menezes"
@@ -24,7 +25,8 @@
     "name": "Bruna Menezes"
   },
   {
-    "name": "Maicon Marques"
+    "name": "Maicon Marques",
+    "bool": false
   },
   {
     "name": "Isaias de Oliveira"
@@ -180,7 +182,8 @@
     "name": "Emilly Mussel"
   },
   {
-    "name": "Nathalia Ferreira"
+    "name": "Nathalia Ferreira",
+    "bool": false
   },
   {
     "name": "Kayky de Oliveira"
@@ -342,5 +345,11 @@
   },
   {
     "name": "Alice Silverio"
+  },
+  {
+    "name": "Marcos Roberto"
+  },
+  {
+    "name": "Ivone Santana"
   }
 ]
